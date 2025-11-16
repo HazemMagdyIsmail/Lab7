@@ -142,16 +142,17 @@ private login parent;
 
     private void signupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupBtnActionPerformed
         // TODO add your handling code here:
-        if (UsernameInput.getText()== null || passwordInput.getText()== null || nameInput.getText()==null || idInput.getText()==null ) {
-                   JOptionPane.showMessageDialog(null, "Invalid !", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
+       
         String Email = EmailInput.getText();
         String UserName = UsernameInput.getText().trim();
         String Password = passwordInput.getText();
         String Name = nameInput.getText();
         String Id = idInput.getText();
-        if(!Name.matches("^[A-Z][a-zA-Z' -]{1,49}$")){
+        if (UserName.isBlank()|| Email.isBlank()|| Password.isBlank()||Name.isBlank()||Id.isBlank() ) {
+                   JOptionPane.showMessageDialog(null, "Invalid !", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+        if(!Name.matches("^[a-zA-Z]{1,49}$")){
   JOptionPane.showMessageDialog(null, "Invalid name!", "Error", JOptionPane.ERROR_MESSAGE);
 return;}
 if(!Email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")){
@@ -174,8 +175,15 @@ return;
 
 
 
-Student s =new Student(Id,"Student", UserName, Email , Password, null, null);
-DB.addStudent(s);
+Student s =new Student(Id,"Student", UserName, Email , Password);
+    try {
+        DB.addStudent(s);
+    } catch (IOException ex) {
+        Logger.getLogger(signup.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    parent.setVisible(true);
+    this.setVisible(false);
+    
 
 
 

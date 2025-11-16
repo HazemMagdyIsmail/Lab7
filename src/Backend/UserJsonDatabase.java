@@ -54,29 +54,32 @@ public class UserJsonDatabase {
         this.Instructors = Instructors;
     }
 
-    public void saveToFile() throws IOException {
+public void saveToFile() throws IOException {
+    JSONArray usersArray = new JSONArray();
 
-        JSONArray usersArray = new JSONArray();
+    for (Student s : students) {
+        JSONObject obj = new JSONObject();
 
-        for (Student s : students) {
-            JSONObject obj = new JSONObject();
+        obj.put("userId", s.getUserId());
+        obj.put("role", s.getRole());
+        obj.put("username", s.getUsername());
+        obj.put("email", s.getEmail());
+        obj.put("passwordHash", s.getPasswordHash());
 
-            obj.put("userId", s.getUserId());
-            obj.put("role", s.getRole());
-            obj.put("username", s.getUsername());
-            obj.put("email", s.getEmail());
-            obj.put("passwordHash", s.getPasswordHash());
-
-            // --- enrolledCourses ---
-            JSONArray enrolledCoursesArray = new JSONArray();
+        // --- enrolledCourses ---
+        JSONArray enrolledCoursesArray = new JSONArray();
+        if (s.getEnrolledCourses() != null) {
             for (String courseId : s.getEnrolledCourses()) {
                 JSONObject courseObj = new JSONObject();
                 courseObj.put("courseId", courseId);
                 enrolledCoursesArray.put(courseObj);
             }
-            obj.put("enrolledCourses", enrolledCoursesArray);
+        }
+        obj.put("enrolledCourses", enrolledCoursesArray);
 
-            JSONObject progressObj = new JSONObject();
+        // --- progress ---
+        JSONObject progressObj = new JSONObject();
+        if (s.getProgress() != null) {
             for (String courseId : s.getProgress().keySet()) {
                 JSONArray lessonsArray = new JSONArray();
                 for (String lessonId : s.getProgress().get(courseId)) {
@@ -86,33 +89,36 @@ public class UserJsonDatabase {
                 }
                 progressObj.put(courseId, lessonsArray);
             }
-            obj.put("progress", progressObj);
-
-            usersArray.put(obj);
         }
+        obj.put("progress", progressObj);
 
-        for (Instructor ins : Instructors) {
-            JSONObject obj = new JSONObject();
+        usersArray.put(obj);
+    }
 
-            obj.put("userId", ins.getUserId());
-            obj.put("role", ins.getRole());
-            obj.put("username", ins.getUsername());
-            obj.put("email", ins.getEmail());
-            obj.put("passwordHash", ins.getPasswordHash());
+    for (Instructor ins : Instructors) {
+        JSONObject obj = new JSONObject();
 
-            JSONArray createdCoursesArray = new JSONArray();
+        obj.put("userId", ins.getUserId());
+        obj.put("role", ins.getRole());
+        obj.put("username", ins.getUsername());
+        obj.put("email", ins.getEmail());
+        obj.put("passwordHash", ins.getPasswordHash());
+
+        JSONArray createdCoursesArray = new JSONArray();
+        if (ins.getCreatedCourses() != null) {
             for (String courseId : ins.getCreatedCourses()) {
                 JSONObject courseObj = new JSONObject();
                 courseObj.put("courseId", courseId);
                 createdCoursesArray.put(courseObj);
             }
-            obj.put("createdCourses", createdCoursesArray);
-
-            usersArray.put(obj);
         }
+        obj.put("createdCourses", createdCoursesArray);
 
-        Files.write(Paths.get("data.json"), usersArray.toString(4).getBytes()); // 4 for pretty print
+        usersArray.put(obj);
     }
+
+    Files.write(Paths.get("data.json"), usersArray.toString(4).getBytes()); // 4 for pretty print
+}
 
     public void readFromFile() throws IOException {
 
@@ -288,5 +294,31 @@ public boolean validateLogin(String username, String password) {
     // Not found
     return false;
 }
+public boolean validateLoginStudent(String username, String password) {
+    // Check students
+    for (Student s : students) {
+        if (s.getUsername().equals(username) && s.getPasswordHash().equals(password)) {
+            return true;
+        }
+    }
 
+    // Check instructors
+    
+
+    // Not found
+    return false;
+}
+public boolean validateLoginInstructor(String username, String password) {
+    
+
+    // Check instructors
+    for (Instructor i : Instructors) {
+        if (i.getUsername().equals(username) && i.getPasswordHash().equals(password)) {
+            return true;
+        }
+    }
+
+    // Not found
+    return false;
+}
 }

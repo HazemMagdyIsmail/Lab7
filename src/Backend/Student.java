@@ -24,6 +24,11 @@ public class Student extends User {
         this.progress = progress;
     }
 
+    public Student(String userId, String role, String username, String email, String passwordHash) {
+        super(userId, role, username, email, passwordHash);
+        
+    }
+
     public ArrayList<String> getEnrolledCourses() {
         return enrolledCourses;
     }

@@ -60,6 +60,24 @@
         "username": "Omar"
     },
     {
+        "role": "Student",
+        "enrolledCourses": [],
+        "progress": {},
+        "userId": "s-9354",
+        "email": "patrick@gmail.com",
+        "passwordHash": "CS123456",
+        "username": "patricoo"
+    },
+    {
+        "role": "Student",
+        "enrolledCourses": [],
+        "progress": {},
+        "userId": "s-9258",
+        "email": "hazem@gmail.com",
+        "passwordHash": "HM123456",
+        "username": "hazomii"
+    },
+    {
         "role": "Instructor",
         "createdCourses": [
             {"courseId": "C001"},
