@@ -288,7 +288,7 @@ public boolean validateLoginStudent(String username, String password) {
     // Check students
     for (Student s : students) {
         if (s.getUsername().equals(username) && s.getPasswordHash().equals(password)) {
-            return true;
+            return true  ;
         }
     }
 
