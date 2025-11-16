@@ -153,13 +153,29 @@ public class login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 String username = usernameInput.getText();
 String password = passwordInput.getText();
-if(DB.validateLogin(username, password)){
+String role="";
+if(jRadioButton1.isSelected()){
+role="I";
+}
+else if(jRadioButton2.isSelected()){
+role="s";
+}
+
+if(DB.validateLoginStudent(username, password)&&role.equals("s")){
     new mainframe ().setVisible(true);
     this.setVisible(false);
     
     
-}
+} 
+else if(DB.validateLoginInstructor(username, password)&&role.equals("I")){
 
+new mainframe ().setVisible(true);
+    this.setVisible(false);
+
+}
+else{
+JOptionPane.showMessageDialog(null, "Invalid Login!", "Error", JOptionPane.ERROR_MESSAGE);
+}
 
 
 
