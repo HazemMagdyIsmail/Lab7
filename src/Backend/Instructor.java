@@ -12,10 +12,18 @@ import java.util.List;
  * @author hazem
  */
 public class Instructor extends User {
-    private List<Course> createdCourses;
+    private ArrayList<String> createdCourses;
 
-    public Instructor( String userId, String role, String username, String email, String passwordHash,List<Course> createdCourses) {
+    public Instructor( String userId, String role, String username, String email, String passwordHash,ArrayList<String> createdCourses) {
         super(userId, role, username, email, passwordHash);
+        this.createdCourses = createdCourses;
+    }
+
+    public ArrayList<String> getCreatedCourses() {
+        return createdCourses;
+    }
+
+    public void setCreatedCourses(ArrayList<String> createdCourses) {
         this.createdCourses = createdCourses;
     }
 

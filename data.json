@@ -1,0 +1,100 @@
+[
+    {
+        "role": "Student",
+        "enrolledCourses": [
+            {"courseId": "C001"},
+            {"courseId": "C002"}
+        ],
+        "progress": {
+            "C002": [{"lessonId": "L1"}],
+            "C001": [
+                {"lessonId": "L1"},
+                {"lessonId": "L2"}
+            ]
+        },
+        "userId": "S001",
+        "email": "hazem@example.com",
+        "passwordHash": "abc123",
+        "username": "Hazem"
+    },
+    {
+        "role": "Student",
+        "enrolledCourses": [{"courseId": "C003"}],
+        "progress": {"C003": [
+            {"lessonId": "L1"},
+            {"lessonId": "L2"}
+        ]},
+        "userId": "S002",
+        "email": "omar@example.com",
+        "passwordHash": "xyz789",
+        "username": "Omar"
+    },
+    {
+        "role": "Student",
+        "enrolledCourses": [
+            {"courseId": "C001"},
+            {"courseId": "C002"}
+        ],
+        "progress": {
+            "C002": [{"lessonId": "L1"}],
+            "C001": [
+                {"lessonId": "L1"},
+                {"lessonId": "L2"}
+            ]
+        },
+        "userId": "S001",
+        "email": "hazem@example.com",
+        "passwordHash": "abc123",
+        "username": "Hazem"
+    },
+    {
+        "role": "Student",
+        "enrolledCourses": [{"courseId": "C003"}],
+        "progress": {"C003": [
+            {"lessonId": "L1"},
+            {"lessonId": "L2"}
+        ]},
+        "userId": "S002",
+        "email": "omar@example.com",
+        "passwordHash": "xyz789",
+        "username": "Omar"
+    },
+    {
+        "role": "Instructor",
+        "createdCourses": [
+            {"courseId": "C001"},
+            {"courseId": "C003"}
+        ],
+        "userId": "I001",
+        "email": "ali@example.com",
+        "passwordHash": "inst123",
+        "username": "Ali"
+    },
+    {
+        "role": "Instructor",
+        "createdCourses": [{"courseId": "C002"}],
+        "userId": "I002",
+        "email": "sara@example.com",
+        "passwordHash": "inst456",
+        "username": "Sara"
+    },
+    {
+        "role": "Instructor",
+        "createdCourses": [
+            {"courseId": "C001"},
+            {"courseId": "C003"}
+        ],
+        "userId": "I001",
+        "email": "ali@example.com",
+        "passwordHash": "inst123",
+        "username": "Ali"
+    },
+    {
+        "role": "Instructor",
+        "createdCourses": [{"courseId": "C002"}],
+        "userId": "I002",
+        "email": "sara@example.com",
+        "passwordHash": "inst456",
+        "username": "Sara"
+    }
+]

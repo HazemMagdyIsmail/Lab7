@@ -1,0 +1,59 @@
+[
+    {
+        "userId": "S001",
+        "role": "Student",
+        "username": "Hazem",
+        "email": "hazem@example.com",
+        "passwordHash": "abc123",
+        "enrolledCourses": [
+            { "courseId": "C001", "title": "Java Basics" },
+            { "courseId": "C002", "title": "Mathematics 1" }
+        ],
+        "progress": {
+            "C001": [
+                { "lessonId": "L1", "title": "Introduction" },
+                { "lessonId": "L2", "title": "Variables" }
+            ],
+            "C002": [
+                { "lessonId": "L1", "title": "Limits" }
+            ]
+        }
+    },
+    {
+        "userId": "S002",
+        "role": "Student",
+        "username": "Omar",
+        "email": "omar@example.com",
+        "passwordHash": "xyz789",
+        "enrolledCourses": [
+            { "courseId": "C003", "title": "Physics 1" }
+        ],
+        "progress": {
+            "C003": [
+                { "lessonId": "L1", "title": "Kinematics" },
+                { "lessonId": "L2", "title": "Dynamics" }
+            ]
+        }
+    },
+    {
+        "userId": "I001",
+        "role": "Instructor",
+        "username": "Ali",
+        "email": "ali@example.com",
+        "passwordHash": "inst123",
+        "createdCourses": [
+            { "courseId": "C001", "title": "Java Basics" },
+            { "courseId": "C003", "title": "Physics 1" }
+        ]
+    },
+    {
+        "userId": "I002",
+        "role": "Instructor",
+        "username": "Sara",
+        "email": "sara@example.com",
+        "passwordHash": "inst456",
+        "createdCourses": [
+            { "courseId": "C002", "title": "Mathematics 1" }
+        ]
+    }
+]
