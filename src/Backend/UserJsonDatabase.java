@@ -284,6 +284,23 @@ public boolean deleteInstructor(String userId) {
         return false;
     }
 }
+public boolean validateLogin(String username, String password) {
+    // Check students
+    for (Student s : students) {
+        if (s.getUsername().equals(username) && s.getPasswordHash().equals(password)) {
+            return true;
+        }
+    }
 
+    // Check instructors
+    for (Instructor i : Instructors) {
+        if (i.getUsername().equals(username) && i.getPasswordHash().equals(password)) {
+            return true;
+        }
+    }
+
+    // Not found
+    return false;
+}
 
 }

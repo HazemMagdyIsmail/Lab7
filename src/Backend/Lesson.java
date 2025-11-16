@@ -39,6 +39,11 @@ public class Lesson {
     public ArrayList<String> getResources() {
         return resources;
     }
+            public void update(String newTitle, String newContent, ArrayList<String> newResources) {
+    this.title = newTitle;
+    this.content = newContent;
+    this.resources = newResources;
+}
     
 
 }
