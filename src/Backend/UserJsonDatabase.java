@@ -237,35 +237,29 @@ public Instructor getInstructorByUsername(String username) {
 // -------------------------
 
 // Adds a Student if not already in the list
-public boolean addStudent(Student s) {
+public boolean addStudent(Student s) throws IOException {
     if (!containsStudent(s.getUserId())) {
         students.add(s);
+          saveToFile();
         return true; // successfully added
     } else {
         System.out.println("Student already exists: " + s.getUserId());
         return false; // duplicate, not added
     }
+   
 }
 
-// Adds an Instructor if not already in the list
-public boolean addInstructor(Instructor i) {
-    if (!containsInstructor(i.getUserId())) {
-        Instructors.add(i);
-        return true;
-    } else {
-        System.out.println("Instructor already exists: " + i.getUserId());
-        return false;
-    }
-}
+
 // -------------------------
 // Delete Users
 // -------------------------
 
 // Removes a student by userId, returns true if removed
-public boolean deleteStudent(String userId) {
+public boolean deleteStudent(String userId) throws IOException {
     Student s = getStudentById(userId);
     if (s != null) {
         students.remove(s);
+          saveToFile();
         return true; // successfully removed
     } else {
         System.out.println("Student not found: " + userId);
@@ -274,32 +268,15 @@ public boolean deleteStudent(String userId) {
 }
 
 
-public boolean deleteInstructor(String userId) {
-    Instructor i = getInstructorById(userId);
-    if (i != null) {
-        Instructors.remove(i);
-        return true;
-    } else {
-        System.out.println("Instructor not found: " + userId);
-        return false;
-    }
-}
-public boolean validateLoginStudent(String username, String password) {
+
+ 
+public boolean validateLogin(String username, String password) {
     // Check students
     for (Student s : students) {
         if (s.getUsername().equals(username) && s.getPasswordHash().equals(password)) {
             return true;
         }
     }
-
-    // Check instructors
-    
-
-    // Not found
-    return false;
-}
-public boolean validateLoginInstructor(String username, String password) {
-    
 
     // Check instructors
     for (Instructor i : Instructors) {

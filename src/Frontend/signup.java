@@ -6,6 +6,9 @@ package Frontend;
 
 import Backend.Student;
 import Backend.UserJsonDatabase;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,13 +16,18 @@ import javax.swing.JOptionPane;
  * @author patrick
  */
 public class signup extends javax.swing.JFrame {
-
+UserJsonDatabase DB;
+private login parent;
 
     /**
      * 
      */
     public signup(UserJsonDatabase DB, login parent) {
         initComponents();
+        this.DB=DB;
+        this.parent=parent;
+        
+        
     }
 
     /**
@@ -167,6 +175,8 @@ return;
 
 
 Student s =new Student(Id,"Student", UserName, Email , Password, null, null);
+DB.addStudent(s);
+
 
 
         
