@@ -4,11 +4,13 @@
  */
 package Frontend;
 import Backend.UserJsonDatabase;
+import static Backend.UserJsonDatabase.hash;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -158,6 +160,7 @@ public class login extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 String username = usernameInput.getText();
 String password = passwordInput.getText();
+
 String role="";
 if(jRadioButton1.isSelected()){
 role="I";
@@ -166,25 +169,29 @@ else if(jRadioButton2.isSelected()){
 role="s";
 }
 
-if(DB.validateLoginStudent(username, password)&&role.equals("s")){
-    new mainframe ().setVisible(true);
-    this.setVisible(false);
-    
-    
-} 
-else if(DB.validateLoginInstructor(username, password)&&role.equals("I")){
-
-new mainframe ().setVisible(true);
-    this.setVisible(false);
-
-}
-else{
-JOptionPane.showMessageDialog(null, "Invalid Login!", "Error", JOptionPane.ERROR_MESSAGE);
-}
-
-
-
-        // TODO add your handling code here:
+      try {
+          if(DB.validateLoginStudent(username, hash(password))&&role.equals("s")){
+              new StudentDash().setVisible(true);
+              this.setVisible(false);
+              
+              
+          }
+          else if(DB.validateLoginInstructor(username, hash(password))&&role.equals("I")){
+              
+              new InstructorDash ().setVisible(true);
+              this.setVisible(false);
+              
+          }
+          else{
+              JOptionPane.showMessageDialog(null, "Invalid Login!", "Error", JOptionPane.ERROR_MESSAGE);
+          }
+          
+          
+          
+          // TODO add your handling code here:
+      } catch (NoSuchAlgorithmException ex) {
+          Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+      }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

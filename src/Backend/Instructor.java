@@ -19,6 +19,10 @@ public class Instructor extends User {
         this.createdCourses = createdCourses;
     }
 
+    public Instructor(String userId, String role, String username, String email, String passwordHash) {
+        super(userId, role, username, email, passwordHash);
+    }
+
     public ArrayList<String> getCreatedCourses() {
         return createdCourses;
     }

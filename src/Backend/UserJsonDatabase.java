@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -120,61 +122,87 @@ public void saveToFile() throws IOException {
     Files.write(Paths.get("data.json"), usersArray.toString(4).getBytes()); // 4 for pretty print
 }
 
-    public void readFromFile() throws IOException {
+  public void readFromFile() throws IOException {
 
-        String content = new String(Files.readAllBytes(Paths.get("data.json")));
+    String content = new String(Files.readAllBytes(Paths.get("data.json")));
+    JSONArray userJson = new JSONArray(content);
 
-        JSONArray userJson = new JSONArray(content);
+    for (int i = 0; i < userJson.length(); i++) {
 
-        for (int i = 0; i < userJson.length(); i++) {
-            JSONObject obj = userJson.getJSONObject(i);
+        JSONObject obj = userJson.getJSONObject(i);
 
-            String userId = obj.getString("userId");
-            String role = obj.getString("role");
-            String username = obj.getString("username");
-            String email = obj.getString("email");
-            String passwordHash = obj.getString("passwordHash");
+        String userId = obj.getString("userId");
+        String role = obj.getString("role");
+        String username = obj.getString("username");
+        String email = obj.getString("email");
+        String passwordHash = obj.getString("passwordHash");
 
-            if (role.equalsIgnoreCase("Student")) {
+        // ----------------------
+        //     STUDENT
+        // ----------------------
+        if (role.equalsIgnoreCase("Student")) {
 
-                JSONArray coursesArray = obj.getJSONArray("enrolledCourses");
-                ArrayList<String> enrolledCourses = new ArrayList<>();
+            // --- enrolledCourses ---
+            JSONArray coursesArray = obj.optJSONArray("enrolledCourses");
+            ArrayList<String> enrolledCourses = new ArrayList<>();
+
+            if (coursesArray != null) {
                 for (int j = 0; j < coursesArray.length(); j++) {
                     JSONObject courseObj = coursesArray.getJSONObject(j);
                     enrolledCourses.add(courseObj.getString("courseId"));
                 }
+            }
 
-                JSONObject progressObj = obj.getJSONObject("progress");
+            // --- progress ---
+            JSONObject progressObj = obj.optJSONObject("progress");
+            HashMap<String, ArrayList<String>> progressMap = new HashMap<>();
 
-                HashMap<String, ArrayList<String>> progressMap = new HashMap<>();
-
+            if (progressObj != null) {
                 for (String courseId : progressObj.keySet()) {
-                    JSONArray lessonsArray = progressObj.getJSONArray(courseId);
+
+                    JSONArray lessonsArray = progressObj.optJSONArray(courseId);
                     ArrayList<String> lessonIds = new ArrayList<>();
 
-                    for (int k = 0; k < lessonsArray.length(); k++) {
-                        JSONObject lessonObj = lessonsArray.getJSONObject(k);
-                        lessonIds.add(lessonObj.getString("lessonId"));
+                    if (lessonsArray != null) {
+                        for (int k = 0; k < lessonsArray.length(); k++) {
+                            JSONObject lessonObj = lessonsArray.getJSONObject(k);
+                            lessonIds.add(lessonObj.getString("lessonId"));
+                        }
                     }
 
                     progressMap.put(courseId, lessonIds);
                 }
+            }
 
-                students.add(new Student(userId, role, username, email, passwordHash, enrolledCourses, progressMap));
+            students.add(new Student(
+                userId, role, username, email, passwordHash,
+                enrolledCourses, progressMap
+            ));
+        }
 
-            } else if (role.equalsIgnoreCase("Instructor")) {
+        // ----------------------
+        //     INSTRUCTOR
+        // ----------------------
+        else if (role.equalsIgnoreCase("Instructor")) {
 
-                JSONArray coursesArray = obj.getJSONArray("createdCourses");
-                ArrayList<String> createdCourses = new ArrayList<>();
+            JSONArray coursesArray = obj.optJSONArray("createdCourses");
+            ArrayList<String> createdCourses = new ArrayList<>();
+
+            if (coursesArray != null) {
                 for (int j = 0; j < coursesArray.length(); j++) {
                     JSONObject courseObj = coursesArray.getJSONObject(j);
                     createdCourses.add(courseObj.getString("courseId"));
                 }
-
-                Instructors.add(new Instructor(userId, role, username, email, passwordHash, createdCourses));
             }
+
+            Instructors.add(new Instructor(
+                userId, role, username, email, passwordHash,
+                createdCourses
+            ));
         }
     }
+}
+
     // -------------------------
 // Search in ArrayLists
 // -------------------------
@@ -275,24 +303,15 @@ public boolean deleteStudent(String userId) throws IOException {
 
 
 
- 
-public boolean validateLogin(String username, String password) {
-    // Check students
-    for (Student s : students) {
-        if (s.getUsername().equals(username) && s.getPasswordHash().equals(password)) {
-            return true  ;
-        }
+ public boolean addInstructor(Instructor i) throws IOException {
+    if (!containsInstructor(i.getUserId())) {
+        Instructors.add(i);
+        saveToFile();
+        return true;
+    } else {
+        System.out.println("Instructor already exists: " + i.getUserId());
+        return false;
     }
-
-    // Check instructors
-    for (Instructor i : Instructors) {
-        if (i.getUsername().equals(username) && i.getPasswordHash().equals(password)) {
-            return true;
-        }
-    }
-
-    // Not found
-    return false;
 }
 public boolean validateLoginStudent(String username, String password) {
     // Check students
@@ -321,4 +340,15 @@ public boolean validateLoginInstructor(String username, String password) {
     // Not found
     return false;
 }
+public static String hash(String password) throws NoSuchAlgorithmException {
+        MessageDigest m = MessageDigest.getInstance("SHA-256");
+        byte[] hashbytes = m.digest(password.getBytes());
+        String s = "";
+        for (byte hashbyte : hashbytes) {
+            s += String.format("%02x", hashbyte);
+
+        }
+        return s;
+
+    }
 }

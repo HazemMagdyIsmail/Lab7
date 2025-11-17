@@ -1,118 +1,19 @@
 [
     {
         "role": "Student",
-        "enrolledCourses": [
-            {"courseId": "C001"},
-            {"courseId": "C002"}
-        ],
-        "progress": {
-            "C002": [{"lessonId": "L1"}],
-            "C001": [
-                {"lessonId": "L1"},
-                {"lessonId": "L2"}
-            ]
-        },
-        "userId": "S001",
-        "email": "hazem@example.com",
-        "passwordHash": "abc123",
+        "enrolledCourses": [],
+        "progress": {},
+        "userId": "s-1234",
+        "email": "hazem@icloud.com",
+        "passwordHash": "89ff82dba986724e212b391b39a264b36fb9389ca2e012a2cf3f4c596e066084",
         "username": "Hazem"
     },
     {
-        "role": "Student",
-        "enrolledCourses": [{"courseId": "C003"}],
-        "progress": {"C003": [
-            {"lessonId": "L1"},
-            {"lessonId": "L2"}
-        ]},
-        "userId": "S002",
-        "email": "omar@example.com",
-        "passwordHash": "xyz789",
-        "username": "Omar"
-    },
-    {
-        "role": "Student",
-        "enrolledCourses": [
-            {"courseId": "C001"},
-            {"courseId": "C002"}
-        ],
-        "progress": {
-            "C002": [{"lessonId": "L1"}],
-            "C001": [
-                {"lessonId": "L1"},
-                {"lessonId": "L2"}
-            ]
-        },
-        "userId": "S001",
-        "email": "hazem@example.com",
-        "passwordHash": "abc123",
-        "username": "Hazem"
-    },
-    {
-        "role": "Student",
-        "enrolledCourses": [{"courseId": "C003"}],
-        "progress": {"C003": [
-            {"lessonId": "L1"},
-            {"lessonId": "L2"}
-        ]},
-        "userId": "S002",
-        "email": "omar@example.com",
-        "passwordHash": "xyz789",
-        "username": "Omar"
-    },
-    {
-        "role": "Student",
-        "enrolledCourses": [],
-        "progress": {},
-        "userId": "s-9354",
-        "email": "patrick@gmail.com",
-        "passwordHash": "CS123456",
-        "username": "patricoo"
-    },
-    {
-        "role": "Student",
-        "enrolledCourses": [],
-        "progress": {},
-        "userId": "s-9258",
-        "email": "hazem@gmail.com",
-        "passwordHash": "HM123456",
-        "username": "hazomii"
-    },
-    {
         "role": "Instructor",
-        "createdCourses": [
-            {"courseId": "C001"},
-            {"courseId": "C003"}
-        ],
-        "userId": "I001",
-        "email": "ali@example.com",
-        "passwordHash": "inst123",
-        "username": "Ali"
-    },
-    {
-        "role": "Instructor",
-        "createdCourses": [{"courseId": "C002"}],
-        "userId": "I002",
-        "email": "sara@example.com",
-        "passwordHash": "inst456",
-        "username": "Sara"
-    },
-    {
-        "role": "Instructor",
-        "createdCourses": [
-            {"courseId": "C001"},
-            {"courseId": "C003"}
-        ],
-        "userId": "I001",
-        "email": "ali@example.com",
-        "passwordHash": "inst123",
-        "username": "Ali"
-    },
-    {
-        "role": "Instructor",
-        "createdCourses": [{"courseId": "C002"}],
-        "userId": "I002",
-        "email": "sara@example.com",
-        "passwordHash": "inst456",
-        "username": "Sara"
+        "createdCourses": [],
+        "userId": "i-2222",
+        "email": "p@gmail.com",
+        "passwordHash": "52333ae115d9afeec32ad4bcf0de949cbd6ee54b461c295f69fcc0daba6a82c0",
+        "username": "Patrick"
     }
 ]
