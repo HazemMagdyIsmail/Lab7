@@ -68,7 +68,7 @@ public void saveToFile() throws IOException {
         obj.put("email", s.getEmail());
         obj.put("passwordHash", s.getPasswordHash());
 
-        // --- enrolledCourses ---
+        
         JSONArray enrolledCoursesArray = new JSONArray();
         if (s.getEnrolledCourses() != null) {
             for (String courseId : s.getEnrolledCourses()) {
@@ -79,7 +79,7 @@ public void saveToFile() throws IOException {
         }
         obj.put("enrolledCourses", enrolledCoursesArray);
 
-        // --- progress ---
+        
         JSONObject progressObj = new JSONObject();
         if (s.getProgress() != null) {
             for (String courseId : s.getProgress().keySet()) {
@@ -137,12 +137,10 @@ public void saveToFile() throws IOException {
         String email = obj.getString("email");
         String passwordHash = obj.getString("passwordHash");
 
-        // ----------------------
-        //     STUDENT
-        // ----------------------
+      
         if (role.equalsIgnoreCase("Student")) {
 
-            // --- enrolledCourses ---
+           
             JSONArray coursesArray = obj.optJSONArray("enrolledCourses");
             ArrayList<String> enrolledCourses = new ArrayList<>();
 
@@ -153,7 +151,7 @@ public void saveToFile() throws IOException {
                 }
             }
 
-            // --- progress ---
+        
             JSONObject progressObj = obj.optJSONObject("progress");
             HashMap<String, ArrayList<String>> progressMap = new HashMap<>();
 
@@ -180,9 +178,7 @@ public void saveToFile() throws IOException {
             ));
         }
 
-        // ----------------------
-        //     INSTRUCTOR
-        // ----------------------
+       
         else if (role.equalsIgnoreCase("Instructor")) {
 
             JSONArray coursesArray = obj.optJSONArray("createdCourses");
@@ -202,13 +198,17 @@ public void saveToFile() throws IOException {
         }
     }
 }
-
-    // -------------------------
-// Search in ArrayLists
-// -------------------------
-
-// Returns the Student object with the given userId, or null if not found
-    // Check if a student with given userId exists
+public boolean deleteInstructor(String userId) {
+    Instructor i = getInstructorById(userId);
+    if (i != null) {
+        Instructors.remove(i);
+        return true;
+    } else {
+        System.out.println("Instructor not found: " + userId);
+        return false;
+    }
+}
+ 
 public boolean containsStudent(String userId) {
     for (Student s : students) {
         if (s.getUserId().equals(userId)) {
@@ -266,29 +266,21 @@ public Instructor getInstructorByUsername(String username) {
     return null;
 }
 
-    // -------------------------
-// Add Users
-// -------------------------
 
-// Adds a Student if not already in the list
 public boolean addStudent(Student s) throws IOException {
     if (!containsStudent(s.getUserId())) {
         students.add(s);
           saveToFile();
-        return true; // successfully added
+        return true; 
     } else {
         System.out.println("Student already exists: " + s.getUserId());
-        return false; // duplicate, not added
+        return false; 
     }
    
 }
 
 
-// -------------------------
-// Delete Users
-// -------------------------
 
-// Removes a student by userId, returns true if removed
 public boolean deleteStudent(String userId) throws IOException {
     Student s = getStudentById(userId);
     if (s != null) {
@@ -314,30 +306,27 @@ public boolean deleteStudent(String userId) throws IOException {
     }
 }
 public boolean validateLoginStudent(String username, String password) {
-    // Check students
+   
     for (Student s : students) {
         if (s.getUsername().equals(username) && s.getPasswordHash().equals(password)) {
             return true;
         }
     }
 
-    // Check instructors
-    
-
-    // Not found
+ 
     return false;
 }
 public boolean validateLoginInstructor(String username, String password) {
     
 
-    // Check instructors
+    
     for (Instructor i : Instructors) {
         if (i.getUsername().equals(username) && i.getPasswordHash().equals(password)) {
             return true;
         }
     }
 
-    // Not found
+
     return false;
 }
 public static String hash(String password) throws NoSuchAlgorithmException {
